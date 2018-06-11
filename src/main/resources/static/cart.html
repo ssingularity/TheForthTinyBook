@@ -1,0 +1,26 @@
+<table class="table table-striped">
+    <caption>购物车</caption>
+    <thead>
+    <tr>
+        <th><b>缩略图</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>书名</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>价格</b></th>
+        <th style="vertical-align: middle !important;text-align: center;">数量</th>
+        <th></th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="book in cart">
+        <td><a class="img-thumbnail" ng-href="#!/view/{{book.id}}"><img ng-src="image/{{book.name}}.jpg" class="img-responsive center-block"></a></td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.name}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.price}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.count}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">
+            <button class="btn btn-primary btn-sm" ng-click="buy(book,book.count)">立刻购买</button>
+            <button class="btn btn-default btn-sm" ng-click="remove(book)">狠心删除</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<button class="btn btn-default btn-block" ng-click="buyAll()">一键下单!</button>

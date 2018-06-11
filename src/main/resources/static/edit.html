@@ -1,0 +1,43 @@
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 form-box">
+            <form role="form" action="/updatebook" method="post" enctype="multipart/form-data" class="form" id="editBookForm">
+                <div class="form-group invisible">
+                    <input type="text" ng-model="book.id" name="id" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="form-name">书名</label>
+                    <input type="text" ng-model="book.name" name="name"class="form-control" id="form-name">
+                </div>
+                <div class="form-group">
+                    <label for="form-writer">作者</label>
+                    <input type="text" ng-model="book.writer" name="writer"class="form-control" id="form-writer">
+                </div>
+                <div class="form-group">
+                    <label for="form-price">价格</label>
+                    <input type="text" ng-model="book.price" name="price"class="form-control" id="form-price">
+                </div>
+                <div class="form-group">
+                    <label for="form-store">库存</label>
+                    <input type="text"ng-model="book.storage" name="storage"class="form-control" id="form-store">
+                </div>
+                <div class="form-group">
+                    <label for="form-publishTime">出版时间</label>
+                    <input type="text"ng-model="book.publishTime" name="publishTime" class="form-control" id="form-publishTime">
+                </div>
+                <div class="form-group">
+                    <label for="form-description">描述</label>
+                    <input type="text"ng-model="book.description" name="description" class="form-control" id="form-description">
+                </div>
+                <div class="form-group">
+                    <label for="form-img">缩略图</label>
+                    <input type="file" ng-model="img"  name="img" id="form-img">
+                </div>
+                <button type="button" class="btn btn-primary" ng-click="save();">编辑</button>
+                <button type="button" class="btn btn-default" ng-click="cancel();">取消</button>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>

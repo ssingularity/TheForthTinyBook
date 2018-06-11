@@ -1,0 +1,38 @@
+
+<div class="row mainBooks">
+    <div class="col-md-12">
+        <form style="padding-bottom:20px;" role="form" action="#">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="query" placeholder="Search...">
+                <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="search(query)"><i class="icon-search"></i></button>
+                    </span>
+            </div>
+        </form>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2" ng-repeat="book in booklist">
+        <div class="img-thumbnail">
+            <a ng-href="#!/view/{{book.id}}">
+                <img ng-src="http://localhost:8080/getBookImg/{{book.name}}" class="img-responsive center-block">
+            </a>
+            <hr>
+            <div class="text-center">
+                <div>书名：{{book.name}}</div>
+                <div>作者：{{book.writer}}</div>
+                <div>价格：{{book.price}}</div>
+                <div>库存：{{book.storage}}</div>
+                <hr>
+                <div ng-if="isadmin"><a ng-href="#!/edit/{{book.id}}" class="btn btn-info btn-block">修改</a></div>
+                <div ng-if="isadmin"><button class="btn btn-danger btn-block" ng-click="remove(book)">删除</button> </div>
+                <button ng-if="!isadmin" class="btn btn-primary btn-block" ng-click="add(book,1)">加入购物车<i class="icon-shopping-cart"></i></button>
+                <button ng-if="!isadmin" class="btn btn-default btn-block" ng-click="buy(book,1)">立刻购买</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <ul class="pager">
+        <li class="previous"><a href="javascript:void(0)"><i class="icon-chevron-left"></i></a> </li>
+        <li class="next"><a href="javascript:void(0)"><i class="icon-chevron-right"></i></a> </li>
+    </ul>
+</div>

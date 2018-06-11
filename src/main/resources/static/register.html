@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Register</title>
+
+        <!-- CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/form-elements.css">
+        <link rel="stylesheet" href="css/style.css">
+
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+    </head>
+
+    <body>
+
+    </div>
+        <!-- Top content -->
+        <div class="top-content">
+            <div class="container">
+                <div class="row">
+                    <div style="padding-top:100px" class="col-md-6 col-md-offset-3 form-box">
+                        <form role="form" action="/logup" method="post" class="registration-form">
+                            <fieldset>
+                                <div class="form-top">
+                                    <div class="form-top-left">
+                                        <h3>Step 1 / 2</h3>
+                                    </div>
+                                </div>
+                                <div class="form-bottom">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-user">Username</label>
+                                        <input type="text" name="username" placeholder="UserName..." class="form-user form-control" id="form-user">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-email">Email</label>
+                                        <input type="text" name="email" placeholder="Email..." class="form-email form-control" id="form-email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-phone">Phone</label>
+                                        <input type="text" name="phone" placeholder="phone..." class="form-phone form-control" id="form-phone">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-password">Password</label>
+                                        <input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-repeat-password">Repeat password</label>
+                                        <input type="password" name="repeat-password" placeholder="Repeat password..."
+                                               class="form-repeat-password form-control" id="form-repeat-password">
+                                    </div>
+                                    <button type="button" class="btn btn-next">Next</button>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="form-top">
+                                    <div class="form-top-left">
+                                        <h3>Step 2 / 2</h3>
+                                    </div>
+                                </div>
+                                <div class="form-bottom">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-first-name">First name</label>
+                                        <input type="text" name="form-first-name" placeholder="First name..." class="form-first-name form-control" id="form-first-name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-last-name">Last name</label>
+                                        <input type="text" name="form-last-name" placeholder="Last name..." class="form-last-name form-control" id="form-last-name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-about-yourself">About yourself</label>
+                                        <textarea name="description" placeholder="About yourself..."
+                                                  class="form-about-yourself form-control" id="form-about-yourself"></textarea>
+                                    </div>
+                                    <button type="button" class="btn btn-previous">Previous</button>
+                                    <button type="submit" class="btn btn-next">Sign me up!</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Javascript -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.backstretch.min.js"></script>
+        <script src="js/retina-1.1.0.min.js"></script>
+        <script src="js/register_scripts.js"></script>
+    </body>
+
+</html>

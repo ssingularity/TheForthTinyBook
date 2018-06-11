@@ -1,0 +1,26 @@
+<table class="table table-striped">
+    <caption>详细信息</caption>
+    <thead>
+    <tr>
+        <th><b>缩略图</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>书名</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>作者</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>价格</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>简要介绍</b></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a class="img-thumbnail" ng-href="#!/view/{{book.id}}"><img ng-src="http://localhost:8080/getBookImg/{{book.name}}" class="img-responsive center-block"></a></td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.name}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.writer}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.price}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.description}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">
+            <button ng-if="!isadmin"class="btn btn-primary btn-sm" ng-click="add(book,1)">加入购物车<i class="icon-shopping-cart"></i></button>
+            <button ng-if="!isadmin"class="btn btn-default btn-sm" ng-click="buy(book,1)">立刻购买</button>
+        </td>
+    </tr>
+    </tbody>
+</table>

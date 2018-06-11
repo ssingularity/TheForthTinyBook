@@ -1,0 +1,21 @@
+<table class="table table-striped">
+    <caption>订单</caption>
+    <thead>
+    <tr>
+        <th><b>缩略图</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>书名</b></th>
+        <th style="vertical-align: middle !important;text-align: center;">数量</th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>价格</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>订单时间</b></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="book in order">
+        <td><a class="img-thumbnail" ng-href="#!/view/{{book.id}}"><img ng-src="image/{{book.bookName}}.jpg" class="img-responsive center-block"></a></td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.bookName}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.count}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.totalPrice}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.time}}</td>
+    </tr>
+    </tbody>
+</table>

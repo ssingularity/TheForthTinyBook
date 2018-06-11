@@ -1,0 +1,26 @@
+<table class="table table-striped">
+    <caption>用户信息</caption>
+    <thead>
+    <tr>
+        <th><b>头像</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>用户名</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>电话号码</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>简要介绍</b></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><span class="img-thumbnail"><img ng-src="image/{{user.username}}.jpg" class="img-responsive center-block"></span></td>
+        <td style="vertical-align: middle !important;text-align: center;">{{user.username}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{user.phone}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{user.description}}</td>
+        <td style="vertical-align: middle !important;text-align: center;"><a class="btn btn-primary btn-sm" ng-href="#!/user_edit">修改个人信息</a></td>
+    </tr>
+    </tbody>
+</table>
+<div class="col-md-offset-5">
+    <form action="/logout" method="post">
+        <button class="btn-danger">注销</button>
+    </form>
+</div>
