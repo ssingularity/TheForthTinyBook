@@ -35,12 +35,9 @@ public class BookService {
 		return bookRepository.findByIdEquals(id);
 	}
 
-	public Book showOne(String name){
-		return bookRepository.findByName(name).get(0);
-	}
-
 	public Book updateBook(Long id,String name, String writer, Integer price, Integer storage, String description, Date publishTime){
 		Book book=showOneById(id);
+		book.setName(name);
 		book.setDescription(description);
 		book.setWriter(writer);
 		book.setPrice(price);

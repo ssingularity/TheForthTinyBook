@@ -47,8 +47,8 @@ public class UserService {
 	}
 
 	public boolean makeOrder(SysUser user,Long id,Integer count){
-		Set<Orders> orders=user.getOrders();
-		if (orders==null) orders=new HashSet<>();
+		//Set<Orders> orders=user.getOrders();
+		//if (orders==null) orders=new HashSet<>();
 		Book book=bookRepository.findByIdEquals(id);
 		if(book==null) return false;
 		Integer storage=book.getStorage();
@@ -60,9 +60,21 @@ public class UserService {
 		Orders order=new Orders(book.getName(),book.getId(),count,count*book.getPrice(),new Date());
 		order.setUser(user);
 		ordersRepository.save(order);
-		orders.add(order);
-		user.setOrders(orders);
-		sysUserRepository.save(user);
+		//orders.add(order);
+		//user.setOrders(orders);
+		//sysUserRepository.save(user);
 		return true;
 	}
+
+	public SysUser updateUser(SysUser user,String password,String description,String phone,String email){
+		user.setPassword(password);
+		user.setDescription(description);
+		user.setPhone(phone);
+		user.setEmail(email);
+		sysUserRepository.save(user);
+		user.setOrders(null);
+		user.setRoles(null);
+		return user;
+	}
+
 }

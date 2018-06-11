@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.*;
 import java.util.Date;
 

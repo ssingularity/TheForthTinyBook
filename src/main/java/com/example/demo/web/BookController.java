@@ -19,7 +19,7 @@ public class BookController {
 		return bookService.search(query);
 	}
 
-	@RequestMapping("/")
+	@RequestMapping("/books")
 	List<Book> showAll(){
 		return bookService.showAll();
 	}
