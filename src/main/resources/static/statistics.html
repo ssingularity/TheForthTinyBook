@@ -1,0 +1,27 @@
+<div class="col-md-12">
+    <form style="padding-bottom:20px;" role="form" action="#">
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="query" placeholder="Search...">
+            <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="search(query)"><i class="icon-search"></i></button>
+                    </span>
+        </div>
+    </form>
+</div>
+<table class="table table-striped">
+    <caption>报表统计</caption>
+    <thead>
+    <tr>
+        <th style="vertical-align: middle !important;text-align: center;"><b>书名</b></th>
+        <th style="vertical-align: middle !important;text-align: center;">数量</th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>金额</b></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="book in order">
+        <td style="vertical-align: middle !important;text-align: center;">{{book.bookName}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.count}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{book.totalPrice}}</td>
+    </tr>
+    </tbody>
+</table>

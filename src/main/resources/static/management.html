@@ -1,0 +1,24 @@
+<table class="table table-striped">
+    <caption>用户信息</caption>
+    <thead>
+    <tr>
+        <th style="vertical-align: middle !important;text-align: center;"><b>用户名</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>电话号码</b></th>
+        <th style="vertical-align: middle !important;text-align: center;"><b>简要介绍</b></th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="user in users">
+        <td style="vertical-align: middle !important;text-align: center;">{{user.username}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{user.phone}}</td>
+        <td style="vertical-align: middle !important;text-align: center;">{{user.description}}</td>
+        <td style="vertical-align: middle !important;text-align: center;"><a class="btn btn-primary btn-sm" ng-href="#!/userEdit/{{user.id}}">修改个人信息</a></td>
+        <td style="vertical-align: middle !important;text-align: center;"><a class="btn btn-danger btn-sm" ng-click="remove(user)">删除用户</a></td>
+    </tr>
+    </tbody>
+</table>
+<div class="col-md-offset-5">
+    <a class="btn btn-success" ng-href="#!/addUser">增加用户</a>
+</div>

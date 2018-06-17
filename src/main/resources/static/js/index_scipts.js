@@ -54,7 +54,48 @@ app.config(['$routeProvider','$locationProvider',function ($routeProvider, $loca
             controller:"UserEditController",
             templateUrl:"user_edit.html"
         })
+        .when('/userEdit/:id',{
+            controller:"UserEditIdController",
+            templateUrl:"user_edit.htm;"
+        })
+        .when('/management',{
+            controller:"ManagementController",
+            templateUrl:"management.html"
+        })
+        .when('/statistics',{
+            controller:"StatisticsController",
+            templateUrl:"statistics.html"
+        })
+        .when('/addUser',{
+            controller:"AddUserController",
+            templateUrl:"addUser.html"
+        })
         .otherwise({redirectTo:"/"});
+}]);
+
+app.controller("UserEditIdController",["$scope","$routeParams",function ($scope, $routeParams) {
+
+}]);
+
+app.controller("AddUserController",["$scope",function ($scope) {
+}]);
+
+app.controller("StatisticsController",["$scope",function ($scope) {
+    alert("here");
+    $scope.search=function(query){
+
+    };
+}]);
+
+app.controller("ManagementController",["$scope",function ($scope) {
+    $.post("/showUsers",null,function (data) {
+        $scope.$apply(function () {
+            $scope.users=data;
+        });
+    });
+    $scope.remove=function (user) {
+
+    };
 }]);
 
 app.controller("MainController",['$route','$location','$routeParams',
