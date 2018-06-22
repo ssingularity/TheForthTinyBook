@@ -32,7 +32,7 @@ public class UserController {
 		SecurityContext securityContext= SecurityContextHolder.getContext();
 		Authentication authentication=securityContext.getAuthentication();
 		SysUser user=(SysUser) authentication.getPrincipal();
-		if(user.getUsername().equals("pipipan")) return true;
+		if(user.getUsername().equals("admin")) return true;
 		else return false;
 	}
 	@RequestMapping("/logup")
@@ -111,13 +111,13 @@ public class UserController {
 
 	@RequestMapping("/removecart")
 	public void removecart(HttpServletRequest httpServletRequest,
-	                    @RequestParam(name="id") Long id){
-		HttpSession session=httpServletRequest.getSession();
-		List<CartBook> cart=(List<CartBook>)session.getAttribute("cart")	;
-		for (CartBook b:cart){
-			if(b.getId().equals(id)){
+	                    @RequestParam(name="id") Long id) {
+		HttpSession session = httpServletRequest.getSession();
+		List<CartBook> cart = (List<CartBook>) session.getAttribute("cart");
+		for (CartBook b : cart) {
+			if (b.getId().equals(id)) {
 				cart.remove(b);
-				session.setAttribute("cart",cart);
+				session.setAttribute("cart", cart);
 				return;
 			}
 		}

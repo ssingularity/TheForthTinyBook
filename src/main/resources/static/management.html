@@ -14,11 +14,12 @@
         <td style="vertical-align: middle !important;text-align: center;">{{user.username}}</td>
         <td style="vertical-align: middle !important;text-align: center;">{{user.phone}}</td>
         <td style="vertical-align: middle !important;text-align: center;">{{user.description}}</td>
-        <td style="vertical-align: middle !important;text-align: center;"><a class="btn btn-primary btn-sm" ng-href="#!/userEdit/{{user.id}}">修改个人信息</a></td>
-        <td style="vertical-align: middle !important;text-align: center;"><a class="btn btn-danger btn-sm" ng-click="remove(user)">删除用户</a></td>
+        <td style="vertical-align: middle !important;text-align: center;"><a class="btn btn-primary btn-sm" ng-href="#!/userEdit/{{user.id}}">修改用户信息</a></td>
+        <td style="vertical-align: middle !important;text-align: center;"><a class="btn btn-danger btn-sm" ng-click="remove(user.id)">删除用户</a></td>
     </tr>
     </tbody>
 </table>
 <div class="col-md-offset-5">
     <a class="btn btn-success" ng-href="#!/addUser">增加用户</a>
 </div>
+<br>

@@ -1,9 +1,10 @@
 package com.example.demo.web;
 
 import com.example.demo.dao.ImageRepository;
-import com.example.demo.domain.Book;
-import com.example.demo.domain.Image;
+import com.example.demo.dao.SysUserRepository;
+import com.example.demo.domain.*;
 import com.example.demo.service.BookService;
+import com.example.demo.service.UserService;
 import com.mongodb.DB;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -30,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 @RestController
 public class ManagerController {
@@ -39,6 +40,23 @@ public class ManagerController {
 
 	@Autowired
 	ImageRepository imageRepository;
+
+	@Autowired
+	UserService userService;
+
+	@RequestMapping("/getUserById")
+	public User getUserById(@RequestParam(name="id") Long id){
+		return userService.getByid(id);
+	}
+
+	@RequestMapping("updateUserById")
+	public void updateUserById(@RequestParam(name="id") Long id,
+	                           @RequestParam(name="password") String password,
+	                          @RequestParam(name="description")String description,
+	                          @RequestParam(name="phone")String phone,
+	                          @RequestParam(name="email")String email){
+		userService.updateUserById(id, password, description, phone, email);
+	}
 
 	@RequestMapping("/addbook")
 	public void bookadd(@RequestParam(name="name") String name,
@@ -61,6 +79,38 @@ public class ManagerController {
 		catch (Exception ex){
 			return;
 		}
+	}
+
+	@RequestMapping("/statistics")
+	public List<Orders> getStatistics(@RequestParam(name="query") String query){
+		List<Orders> orders = userService.getStatistics(query);
+		Map<String, Orders> map = new HashMap<>();
+		for (Orders order : orders){
+			if (map.containsKey(order.getBookName())){
+				Orders o = map.get(order.getBookName());
+				o.setCount(o.getCount() + order.getCount());
+				o.setTotalPrice(o.getTotalPrice() + order.getTotalPrice());
+			}
+			else {
+				map.put(order.getBookName(), order);
+			}
+		}
+		List<Orders> result = new LinkedList<>();
+		for (Orders order : map.values()) {
+			order.setUser(null);
+			result.add(order);
+		}
+		return result;
+	}
+
+	@RequestMapping("/getUsers")
+	public List<User> getUsers(){
+		return userService.getUsers();
+	}
+
+	@RequestMapping("/removeUser")
+	public void deleteUser(@RequestParam(name="id") Long id){
+		userService.removeById(id);
 	}
 
 	@RequestMapping("/removebook")

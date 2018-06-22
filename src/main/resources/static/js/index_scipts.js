@@ -56,7 +56,7 @@ app.config(['$routeProvider','$locationProvider',function ($routeProvider, $loca
         })
         .when('/userEdit/:id',{
             controller:"UserEditIdController",
-            templateUrl:"user_edit.htm;"
+            templateUrl:"user_editid.html"
         })
         .when('/management',{
             controller:"ManagementController",
@@ -70,10 +70,37 @@ app.config(['$routeProvider','$locationProvider',function ($routeProvider, $loca
             controller:"AddUserController",
             templateUrl:"addUser.html"
         })
+        .when('/userEdit/:id',{
+            controller:"UserEditIdController",
+            templateUrl:"user_editid.html"
+        })
         .otherwise({redirectTo:"/"});
 }]);
 
-app.controller("UserEditIdController",["$scope","$routeParams",function ($scope, $routeParams) {
+app.controller("UserEditIdController",["$scope","$routeParams","$location",function ($scope, $routeParams, $location) {
+    $.post("/getUserById",{
+        "id":$routeParams.id
+    },function (data, statusText) {
+        console.log(data);
+        $scope.$apply(function () {
+            $scope.user=data;
+        });
+    });
+    $scope.save=function () {
+        $.post("/updateUserById",{
+            "id":$scope.user.id,
+            "password":$scope.user.password,
+            "email":$scope.user.email,
+            "description":$scope.user.description,
+            "phone":$scope.user.phone
+        },function (data) {
+            alert("修改成功");
+            $location.path("/");
+        });
+    };
+    $scope.cancel=function () {
+        $location.path("/");
+    };
 
 }]);
 
@@ -81,20 +108,30 @@ app.controller("AddUserController",["$scope",function ($scope) {
 }]);
 
 app.controller("StatisticsController",["$scope",function ($scope) {
-    alert("here");
     $scope.search=function(query){
-
+        $.post("statistics",{
+            "query":query
+        },function (data) {
+            $scope.$apply(function () {
+                $scope.order=data;
+            })
+        })
     };
 }]);
 
 app.controller("ManagementController",["$scope",function ($scope) {
-    $.post("/showUsers",null,function (data) {
+    $.post("/getUsers",null,function (data) {
         $scope.$apply(function () {
             $scope.users=data;
         });
     });
-    $scope.remove=function (user) {
-
+    $scope.remove=function (id) {
+        $.post("removeUser",{
+            "id":id
+        },function (data) {
+            alert("成功删除用户");
+            window.location.reload(true);
+        });
     };
 }]);
 

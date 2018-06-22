@@ -115,9 +115,9 @@
             <li ><a href="#!/user"><i class="icon-user"></i> 用户信息</a></li>
             <li ng-if="!isadmin"><a href="#!/cart"> <i class="icon-shopping-cart"></i> 购物车</a></li>
             <li ng-if="!isadmin"><a href="#!/order"><i class="icon-list"></i> 订单信息</a></li>
-            <li ng-if="!isadmin"><a href="#!/add"><i class="icon-book"></i> 增加书本</a></li>
-            <li ng-if="!isadmin"><a href="#!/management">用户管理</a></li>
-            <li ng-if="!isadmin"><a href="#!/statistics">销售统计</a></li>
+            <li ng-if="isadmin"><a href="#!/add"><i class="icon-book"></i> 增加书本</a></li>
+            <li ng-if="isadmin"><a href="#!/management"><i class="icon-user"></i> 用户管理</a></li>
+            <li ng-if="isadmin"><a href="#!/statistics"><i class="icon-list"></i> 销售统计</a></li>
         </ul>
     </div>
 
