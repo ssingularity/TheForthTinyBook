@@ -22,6 +22,8 @@ public class UserService {
 	SysUserRepository sysUserRepository;
 	@Autowired
 	SysRoleRepository sysRoleRepository;
+	@Autowired
+	OrderService orderService;
 
 	private boolean isNumber(String s){
 		for(int i=0;i<s.length();++i){
@@ -105,6 +107,8 @@ public class UserService {
 		Orders order=new Orders(book.getName(),book.getId(),count,count*book.getPrice(),new Date());
 		order.setUser(user);
 		ordersRepository.save(order);
+		System.out.println(orderService.getResult());
+
 		//orders.add(order);
 		//user.setOrders(orders);
 		//sysUserRepository.save(user);

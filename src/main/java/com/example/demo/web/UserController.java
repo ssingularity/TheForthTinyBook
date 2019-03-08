@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
+@Scope("prototype")
 public class UserController {
 	@Autowired
 	UserService userService;
