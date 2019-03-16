@@ -12,6 +12,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static com.example.demo.Common.Util.decodeBill;
+import static com.example.demo.Common.Util.encodeBill;
+
 @Service
 public class UserService {
 	@Autowired
@@ -82,6 +85,7 @@ public class UserService {
 	public List<Orders> showOrder(SysUser user){
 		List<Orders> orders=ordersRepository.findByUser_id(user.getId());
 		for (Orders o:orders){
+			o.setTotalPrice(decodeBill(o.getTotalPrice()));
 			o.setUser(null);
 		}
 		return orders;
@@ -104,7 +108,8 @@ public class UserService {
 			book.setStorage(storage-count);
 			bookRepository.save(book);
 		}
-		Orders order=new Orders(book.getName(),book.getId(),count,count*book.getPrice(),new Date());
+		int totalPrice = encodeBill(count * book.getPrice());
+		Orders order=new Orders(book.getName(),book.getId(),count,totalPrice,new Date());
 		order.setUser(user);
 		ordersRepository.save(order);
 		System.out.println(orderService.getResult());
