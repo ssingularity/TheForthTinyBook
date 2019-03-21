@@ -7,6 +7,8 @@ import com.example.demo.dao.SysUserRepository;
 import com.example.demo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,6 +37,7 @@ public class UserService {
 		return true;
 	}
 
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public List<Orders> getStatistics(String query){
 		int index=query.indexOf('~');
 		if(index==-1){
@@ -56,6 +59,7 @@ public class UserService {
 		}
 	}
 
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public List<User> getUsers(){
 		List<SysUser> sysUsers = sysUserRepository.findAll();
 		List<User> users = new ArrayList<>();
@@ -65,15 +69,18 @@ public class UserService {
 		return users;
 	}
 
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public void removeById(Long id){
 		sysUserRepository.deleteById(id);
 	}
 
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public User getByid(Long id){
 		SysUser user = sysUserRepository.getOne(id);
 		return new User(user.getId(),user.getUsername(),user.getPassword(),user.getDescription(),user.getPhone(),user.getEmail());
 	}
 
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public void addUser(String username,String password,String description,String phone, String email){
 		SysRole role=sysRoleRepository.findByIdEquals(1L);
 		List<SysRole> roles=new ArrayList<>();
@@ -82,6 +89,7 @@ public class UserService {
 		sysUserRepository.save(user);
 	}
 
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public List<Orders> showOrder(SysUser user){
 		List<Orders> orders=ordersRepository.findByUser_id(user.getId());
 		for (Orders o:orders){
@@ -91,12 +99,14 @@ public class UserService {
 		return orders;
 	}
 
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public boolean isExisted(String name){
 		SysUser user=sysUserRepository.findByUsername(name);
 		if (user==null) return false;
 		else return true;
 	}
 
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public boolean makeOrder(SysUser user,Long id,Integer count){
 		//Set<Orders> orders=user.getOrders();
 		//if (orders==null) orders=new HashSet<>();
@@ -120,6 +130,7 @@ public class UserService {
 		return true;
 	}
 
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public SysUser updateUser(SysUser user,String password,String description,String phone,String email){
 		user.setPassword(password);
 		user.setDescription(description);
@@ -131,6 +142,7 @@ public class UserService {
 		return user;
 	}
 
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public void updateUserById(Long id, String password, String description, String phone, String email){
 		SysUser user = sysUserRepository.getOne(id);
 		user.setDescription(description);

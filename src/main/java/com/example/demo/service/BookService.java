@@ -4,6 +4,8 @@ import com.example.demo.dao.BookRepository;
 import com.example.demo.domain.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,19 +24,23 @@ public class BookService {
 		return true;
 	}
 
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public Book addBook(String name, String writer, Integer price, Integer storage, String description, Date publishTime){
 		Book book=new Book(name,writer,price,storage,description,publishTime);
 		return bookRepository.save(book);
 	}
 
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public void removeBook(Long id){
 		bookRepository.deleteById(id);
 	}
 
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public Book showOneById(Long id){
 		return bookRepository.findByIdEquals(id);
 	}
 
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public Book updateBook(Long id,String name, String writer, Integer price, Integer storage, String description, Date publishTime){
 		Book book=showOneById(id);
 		book.setName(name);
@@ -46,6 +52,7 @@ public class BookService {
 		return bookRepository.save(book);
 	}
 
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public List<Book> search(String query){
 		int index=query.indexOf('~');
 		if(index==-1){
@@ -74,6 +81,7 @@ public class BookService {
 		}
 	}
 
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public List<Book> showAll(){
 		return bookRepository.findAll();
 	}
