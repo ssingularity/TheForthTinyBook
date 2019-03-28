@@ -5,6 +5,7 @@ import com.example.demo.dao.OrdersRepository;
 import com.example.demo.dao.SysRoleRepository;
 import com.example.demo.dao.SysUserRepository;
 import com.example.demo.domain.*;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -29,6 +30,8 @@ public class UserService {
 	SysRoleRepository sysRoleRepository;
 	@Autowired
 	OrderService orderService;
+	@Autowired
+	AmqpTemplate amqpTemplate;
 
 	private boolean isNumber(String s){
 		for(int i=0;i<s.length();++i){
@@ -117,17 +120,12 @@ public class UserService {
 		else {
 			book.setStorage(storage-count);
 			bookRepository.save(book);
+			int totalPrice = encodeBill(count * book.getPrice());
+			Orders order=new Orders(book.getName(),book.getId(),count,totalPrice,new Date());
+			order.setUser(user);
+			amqpTemplate.convertAndSend("order", order);
+			return true;
 		}
-		int totalPrice = encodeBill(count * book.getPrice());
-		Orders order=new Orders(book.getName(),book.getId(),count,totalPrice,new Date());
-		order.setUser(user);
-		ordersRepository.save(order);
-		System.out.println(orderService.getResult());
-
-		//orders.add(order);
-		//user.setOrders(orders);
-		//sysUserRepository.save(user);
-		return true;
 	}
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
