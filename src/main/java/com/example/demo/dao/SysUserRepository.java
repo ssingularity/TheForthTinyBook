@@ -1,11 +1,11 @@
 package com.example.demo.dao;
 
 import com.example.demo.domain.SysUser;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface SysUserRepository extends JpaRepository<SysUser,Long>{
+public interface SysUserRepository extends MongoRepository<SysUser,String> {
 	SysUser findByUsername(String username);
-	SysUser findByIdEquals(Long id);
+	SysUser findByIdEquals(String id);
 }

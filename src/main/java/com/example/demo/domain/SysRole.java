@@ -1,19 +1,20 @@
 package com.example.demo.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-public class SysRole {
-	@Id
-	@GeneratedValue
-	private Long id;
+import java.io.Serializable;
+
+
+@Document
+public class SysRole implements Serializable {
+    @Id
+	private String id;
 	private String name;
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -23,6 +24,10 @@ public class SysRole {
 		this.name = name;
 	}
 
+	public SysRole() {
+	}
 
-
+	public SysRole(String name) {
+		this.name = name;
+	}
 }

@@ -1,36 +1,37 @@
 package com.example.demo.domain;
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-public class Orders {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@ManyToOne(targetEntity = SysUser.class)
-	private SysUser user;
+@Document
+public class Orders implements Serializable {
+    @Id
+	private String id;
 
-	public Long getId() {
+	private String userId;
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public SysUser getUser() {
-		return user;
-	}
-
-	public void setUser(SysUser user) {
-		this.user = user;
-	}
-
 	private String bookName;
-	private Long bookId;
+	private String bookId;
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	private Integer count;
 	private Integer totalPrice;
-	@Temporal(TemporalType.DATE)
 	private Date time;
 
 	public String getBookName() {
@@ -41,11 +42,11 @@ public class Orders {
 		this.bookName = bookName;
 	}
 
-	public Long getBookId() {
+	public String getBookId() {
 		return bookId;
 	}
 
-	public void setBookId(Long bookId) {
+	public void setBookId(String bookId) {
 		this.bookId = bookId;
 	}
 
@@ -69,7 +70,7 @@ public class Orders {
 		return time;
 	}
 
-	public Orders(String bookName,  Long bookId, Integer count, Integer totalPrice, Date time) {
+	public Orders(String bookName,  String bookId, Integer count, Integer totalPrice, Date time) {
 		this.bookName = bookName;
 		this.bookId = bookId;
 		this.count = count;

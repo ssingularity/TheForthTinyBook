@@ -7,6 +7,8 @@ import com.example.demo.dao.SysUserRepository;
 import com.example.demo.domain.*;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import static com.example.demo.Common.Util.decodeBill;
 import static com.example.demo.Common.Util.encodeBill;
 
 @Service
+@CacheConfig(cacheNames = "books")
 public class UserService {
 	@Autowired
 	BookRepository bookRepository;
@@ -73,31 +76,30 @@ public class UserService {
 	}
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public void removeById(Long id){
+	public void removeById(String id){
 		sysUserRepository.deleteById(id);
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED)
-	public User getByid(Long id){
-		SysUser user = sysUserRepository.getOne(id);
+	public User getByid(String id){
+		SysUser user = sysUserRepository.findByIdEquals(id);
 		return new User(user.getId(),user.getUsername(),user.getPassword(),user.getDescription(),user.getPhone(),user.getEmail());
 	}
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public void addUser(String username,String password,String description,String phone, String email){
-		SysRole role=sysRoleRepository.findByIdEquals(1L);
-		List<SysRole> roles=new ArrayList<>();
-		roles.add(role);
-		SysUser user=new SysUser(username,password,description,phone,email,null,roles);
+		SysUser user=new SysUser(username,password,description,phone,email,null,null);
+		List<SysRole> sysRoles = new ArrayList<>();
+		sysRoles.add(new SysRole("admin"));
+		user.setRoles(sysRoles);
 		sysUserRepository.save(user);
 	}
 
 	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public List<Orders> showOrder(SysUser user){
-		List<Orders> orders=ordersRepository.findByUser_id(user.getId());
+		List<Orders> orders=ordersRepository.findByUserId(user.getId());
 		for (Orders o:orders){
 			o.setTotalPrice(decodeBill(o.getTotalPrice()));
-			o.setUser(null);
 		}
 		return orders;
 	}
@@ -110,7 +112,8 @@ public class UserService {
 	}
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public boolean makeOrder(SysUser user,Long id,Integer count){
+	@CacheEvict(key = "#id")
+	public boolean makeOrder(SysUser user,String id,Integer count){
 		//Set<Orders> orders=user.getOrders();
 		//if (orders==null) orders=new HashSet<>();
 		Book book=bookRepository.findByIdEquals(id);
@@ -122,7 +125,7 @@ public class UserService {
 			bookRepository.save(book);
 			int totalPrice = encodeBill(count * book.getPrice());
 			Orders order=new Orders(book.getName(),book.getId(),count,totalPrice,new Date());
-			order.setUser(user);
+			order.setUserId(user.getId());
 			amqpTemplate.convertAndSend("order", order);
 			return true;
 		}
@@ -135,14 +138,12 @@ public class UserService {
 		user.setPhone(phone);
 		user.setEmail(email);
 		sysUserRepository.save(user);
-		user.setOrders(null);
-		user.setRoles(null);
 		return user;
 	}
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public void updateUserById(Long id, String password, String description, String phone, String email){
-		SysUser user = sysUserRepository.getOne(id);
+	public void updateUserById(String id, String password, String description, String phone, String email){
+		SysUser user = sysUserRepository.findByIdEquals(id);
 		user.setDescription(description);
 		user.setPhone(phone);
 		user.setEmail(email);

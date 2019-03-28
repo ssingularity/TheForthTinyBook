@@ -45,12 +45,12 @@ public class ManagerController {
 	UserService userService;
 
 	@RequestMapping("/getUserById")
-	public User getUserById(@RequestParam(name="id") Long id){
+	public User getUserById(@RequestParam(name="id") String id){
 		return userService.getByid(id);
 	}
 
 	@RequestMapping("updateUserById")
-	public void updateUserById(@RequestParam(name="id") Long id,
+	public void updateUserById(@RequestParam(name="id") String id,
 	                           @RequestParam(name="password") String password,
 	                          @RequestParam(name="description")String description,
 	                          @RequestParam(name="phone")String phone,
@@ -97,7 +97,6 @@ public class ManagerController {
 		}
 		List<Orders> result = new LinkedList<>();
 		for (Orders order : map.values()) {
-			order.setUser(null);
 			result.add(order);
 		}
 		return result;
@@ -109,17 +108,17 @@ public class ManagerController {
 	}
 
 	@RequestMapping("/removeUser")
-	public void deleteUser(@RequestParam(name="id") Long id){
+	public void deleteUser(@RequestParam(name="id") String id){
 		userService.removeById(id);
 	}
 
 	@RequestMapping("/removebook")
-	public void delete(@RequestParam(name="id") Long id){
+	public void delete(@RequestParam(name="id") String id){
 		bookService.removeBook(id);
 	}
 
 	@RequestMapping("/updatebook")
-	public Book updatebook(@RequestParam(name="id")Long id,
+	public Book updatebook(@RequestParam(name="id")String id,
 	                       @RequestParam(name = "name") String name,
 	                    @RequestParam(name="writer") String writer,
 	                    @RequestParam(name="price")Integer price,

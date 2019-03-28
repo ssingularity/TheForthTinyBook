@@ -1,8 +1,8 @@
 package com.example.demo.dao;
 
 import com.example.demo.domain.SysRole;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface SysRoleRepository extends JpaRepository<SysRole,Long>{
-	SysRole findByIdEquals(Long id);
+public interface SysRoleRepository extends MongoRepository<SysRole,String> {
+	SysRole findByIdEquals(String id);
 }

@@ -1,26 +1,26 @@
 package com.example.demo.domain;
+import java.io.Serializable;
 import java.util.*;
 
-import javax.persistence.*;
-
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-@Entity
-public class SysUser implements UserDetails { //1
+@Document
+public class SysUser implements UserDetails, Serializable { //1
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue
-	private Long id;
+	private String id;
 	private String username;
 	private String password;
 	private String description;
 	private String phone;
 	private String email;
-	@OneToMany(targetEntity = Orders.class,mappedBy = "",fetch = FetchType.EAGER)
+	@Field
 	private Set<Orders> orders=new HashSet<>();
-	@ManyToMany(fetch = FetchType.EAGER)
 	private List<SysRole> roles;
 
 
@@ -54,11 +54,11 @@ public class SysUser implements UserDetails { //1
 		return true;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -1,21 +1,20 @@
 package com.example.demo.domain;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-public class Book {
+@Document
+public class Book implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private String id;
 	private String name;
 	private String writer;
 	private Integer price;
 	private Integer storage;
 	private String description;
-	@Temporal(TemporalType.DATE)
 	private Date publishTime;
 
 	public Book(){}
@@ -29,11 +28,11 @@ public class Book {
 		this.publishTime = publishTime;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

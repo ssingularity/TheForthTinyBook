@@ -8,6 +8,7 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,7 +35,8 @@ public class UserController {
 		SecurityContext securityContext= SecurityContextHolder.getContext();
 		Authentication authentication=securityContext.getAuthentication();
 		SysUser user=(SysUser) authentication.getPrincipal();
-		if(user.getUsername().equals("admin")) return true;
+		if (user == null) return false;
+		if(user.getRoles().get(0).getName().equals("admin")) return true;
 		else return false;
 	}
 	@RequestMapping("/logup")
@@ -48,7 +50,7 @@ public class UserController {
 	}
 
 	@RequestMapping("/makeorder")
-	public boolean makeorder(@RequestParam(name="id")Long id,
+	public boolean makeorder(@RequestParam(name="id")String id,
 							@RequestParam(name="count")Integer count){
 		SecurityContext securityContext= SecurityContextHolder.getContext();
 		Authentication authentication=securityContext.getAuthentication();
@@ -84,15 +86,12 @@ public class UserController {
 		SecurityContext securityContext= SecurityContextHolder.getContext();
 		Authentication authentication=securityContext.getAuthentication();
 		SysUser user=(SysUser) authentication.getPrincipal();
-		user.setRoles(null);
-		user.setOrders(null);
-
 		//return user;
 		return new User(user.getId(),user.getUsername(),user.getPassword(),user.getDescription(),user.getPhone(),user.getEmail());
 	}
 	@RequestMapping("/addcart")
 	public void addcart(HttpServletRequest httpServletRequest,
-	                    @RequestParam(name="id") Long id){
+	                    @RequestParam(name="id") String id){
 		HttpSession session=httpServletRequest.getSession();
 		List<CartBook> cart=(List<CartBook>)session.getAttribute("cart")	;
 		if (cart==null) {
@@ -113,7 +112,7 @@ public class UserController {
 
 	@RequestMapping("/removecart")
 	public void removecart(HttpServletRequest httpServletRequest,
-	                    @RequestParam(name="id") Long id) {
+	                    @RequestParam(name="id") String id) {
 		HttpSession session = httpServletRequest.getSession();
 		List<CartBook> cart = (List<CartBook>) session.getAttribute("cart");
 		for (CartBook b : cart) {

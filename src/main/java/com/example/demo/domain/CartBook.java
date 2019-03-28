@@ -3,17 +3,17 @@ package com.example.demo.domain;
 import java.io.Serializable;
 
 public class CartBook implements Serializable{
-	private Long id;
+	private String id;
 	private String name;
 	private String writer;
 	private Integer price;
 	private Integer count;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -49,7 +49,7 @@ public class CartBook implements Serializable{
 		this.count = count;
 	}
 
-	public CartBook(Long id, String name, String writer, Integer price, Integer count) {
+	public CartBook(String id, String name, String writer, Integer price, Integer count) {
 		this.id = id;
 		this.name = name;
 		this.writer = writer;

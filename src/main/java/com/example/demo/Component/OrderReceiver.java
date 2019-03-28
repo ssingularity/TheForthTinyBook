@@ -19,7 +19,7 @@ public class OrderReceiver {
     OrdersRepository ordersRepository;
     @RabbitHandler
     public void handler(Orders orders){
-        System.out.println(orderService.getResult());
+        System.out.println("RMI: " + orderService.getResult());
         ordersRepository.save(orders);
     }
 }

@@ -3,10 +3,15 @@ package com.example.demo.service;
 import com.example.demo.dao.BookRepository;
 import com.example.demo.domain.Book;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.ServerSocket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +19,8 @@ import java.util.List;
 
 
 @Service
+
+@CacheConfig(cacheNames = "books")
 public class BookService {
 	@Autowired
 	BookRepository bookRepository;
@@ -30,18 +37,22 @@ public class BookService {
 		return bookRepository.save(book);
 	}
 
+	@CacheEvict("#p0")
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public void removeBook(Long id){
+	public void removeBook(String id){
 		bookRepository.deleteById(id);
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED)
-	public Book showOneById(Long id){
+	@Cacheable(key = "#p0")
+	public Book showOneById(String id){
+		System.out.println(id);
 		return bookRepository.findByIdEquals(id);
 	}
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public Book updateBook(Long id,String name, String writer, Integer price, Integer storage, String description, Date publishTime){
+	@CachePut(key = "#p0")
+	public Book updateBook(String id,String name, String writer, Integer price, Integer storage, String description, Date publishTime){
 		Book book=showOneById(id);
 		book.setName(name);
 		book.setDescription(description);

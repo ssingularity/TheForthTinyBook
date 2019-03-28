@@ -25,7 +25,7 @@ public class BookController {
 	}
 
 	@RequestMapping("/bookdetail")
-	Book showOne(@RequestParam(name="id") Long id){
+	Book showOne(@RequestParam(name="id") String id){
 		return bookService.showOneById(id);
 	}
 }
