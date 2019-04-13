@@ -11,4 +11,5 @@ public interface OrdersRepository extends MongoRepository<Orders,String> {
 	List<Orders> findByUserId(String id);
 	List<Orders> findByBookNameLike(String name);
 	List<Orders> findByTimeBetween(Date start, Date end);
+	Orders findOrdersById(String id);
 }
