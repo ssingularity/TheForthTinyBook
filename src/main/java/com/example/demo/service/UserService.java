@@ -5,7 +5,9 @@ import com.example.demo.dao.OrdersRepository;
 import com.example.demo.dao.SysRoleRepository;
 import com.example.demo.dao.SysUserRepository;
 import com.example.demo.domain.*;
+import io.netty.util.concurrent.OrderedEventExecutor;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -34,7 +36,7 @@ public class UserService {
 	@Autowired
 	OrderService orderService;
 	@Autowired
-	AmqpTemplate amqpTemplate;
+	RabbitTemplate rabbitTemplate;
 
 	private boolean isNumber(String s){
 		for(int i=0;i<s.length();++i){
@@ -126,7 +128,7 @@ public class UserService {
 			int totalPrice = encodeBill(count * book.getPrice());
 			Orders order=new Orders(book.getName(),book.getId(),count,totalPrice,new Date());
 			order.setUserId(user.getId());
-			amqpTemplate.convertAndSend("order", order);
+			rabbitTemplate.convertAndSend("orderExchange", "order", order);
 			return true;
 		}
 	}

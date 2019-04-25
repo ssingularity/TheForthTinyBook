@@ -1,11 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.dao.RelationUserRepository;
-import com.example.demo.domain.RelationUser;
 import com.example.demo.service.OrderService;
 import javafx.application.Application;
-import org.neo4j.ogm.config.Configuration;
-import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -30,7 +26,7 @@ public class DemoApplication extends SpringBootServletInitializer {
 	}
 
 	public static void main(String[] args) {
-		System.setProperty("es.set.netty.runtime.available.processors","false");
+		//System.setProperty("es.set.netty.runtime.available.processors","false");
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
@@ -40,27 +36,27 @@ public class DemoApplication extends SpringBootServletInitializer {
 		return application.sources(Application.class);
 	}
 
-	@Bean
-	CommandLineRunner demo(RelationUserRepository relationUserRepository) {
-		return args -> {
-		    System.out.println("start neo4j");
-			relationUserRepository.deleteAll();
-			RelationUser userA = new RelationUser("User A");
-			RelationUser userB = new RelationUser("User B");
-			RelationUser userC = new RelationUser("User C");
-
-			relationUserRepository.save(userA);
-			relationUserRepository.save(userB);
-			relationUserRepository.save(userC);
-
-			userA.follow(userB);
-			userA.follow(userC);
-			userB.follow(userC);
-			userC.follow(userB);
-
-			relationUserRepository.save(userA);
-			relationUserRepository.save(userB);
-			relationUserRepository.save(userC);
-		};
-	}
+//	@Bean
+//	CommandLineRunner demo(RelationUserRepository relationUserRepository) {
+//		return args -> {
+//		    System.out.println("start neo4j");
+//			relationUserRepository.deleteAll();
+//			RelationUser userA = new RelationUser("User A");
+//			RelationUser userB = new RelationUser("User B");
+//			RelationUser userC = new RelationUser("User C");
+//
+//			relationUserRepository.save(userA);
+//			relationUserRepository.save(userB);
+//			relationUserRepository.save(userC);
+//
+//			userA.follow(userB);
+//			userA.follow(userC);
+//			userB.follow(userC);
+//			userC.follow(userB);
+//
+//			relationUserRepository.save(userA);
+//			relationUserRepository.save(userB);
+//			relationUserRepository.save(userC);
+//		};
+//	}
 }
